@@ -2,15 +2,25 @@
 
 ## Description
 Following tasks are performed in this project:
-- Integration of Azure Cognitive Search with Azure Data Factory.
-- Setting up and configuring Azure resources required for the project.
-- Creating and configuring Azure Data Factory pipelines.
-- Implementing data ingestion and indexing workflows.
-- Managing and securing Azure resources using environment variables.
+- Integration of Azure Cognitive Search to Search and filter Queries.
+- Integration of Azure Data Factory.
+- Trigger ETL pipeline to insert Products using Stored Procedure from C# Code.
+- Implemented Change Data Capture in C#.
+- For Change Data Capture, Copy recently added changes from Products table in Azure Database.
+- For Change Data Capture, Write recently added Products to Destination Data Source (For Demo, I am using JSON File as Destination).
+- Managing and securing Azure resources using environment variables in .env file.
 - Building and running the application using .NET 7.
 
 ## Project Configurations
 Following are the steps to configure and run the project.
+
+## Azure Data Factory Pipeline
+Following is the Azure Data Factory:
+- Pipeline that Wait for 5 seconds.
+- Execute Lookup Activity to Load the data from Excel file.
+- ForEach Activity with nested Stored Procedure to insert Products
+
+![ADF Pipeline](./images/adf_pipeline.png "ADF Pipeline")
 
 ### Clone the repository
 ```bash
