@@ -14,10 +14,10 @@ namespace ecommerceApp
         public string CustomerName { get; set; }
 
         [IsSearchable, IsRetrievable(true)]
-        public string? CustomerEmail { get; set; }
+        public string CustomerEmail { get; set; }
 
         [IsSearchable, IsFilterable, IsRetrievable(true)]
-        public string? ProductName { get; set; }
+        public string ProductName { get; set; }
 
         [IsRetrievable(true)]
         public string ImageURL { get; set; }

@@ -23,27 +23,27 @@ namespace ecommerceApp
             var apiKey = Environment.GetEnvironmentVariable("SEARCH_SERVICE_API_KEY");
             var searchIndexName = Environment.GetEnvironmentVariable("SEARCH_INDEX_NAME");
 
-            var dataFactoryName = Environment.GetEnvironmentVariable("DATA_FACTORY_NAME");            
+            var dataFactoryName = Environment.GetEnvironmentVariable("DATA_FACTORY_NAME");
             var pipelineName = Environment.GetEnvironmentVariable("PIPELINE_NAME");
             var resourceGroupName = Environment.GetEnvironmentVariable("RESOURCE_GROUP_NAME");
             var blobStorageConnectionString = Environment.GetEnvironmentVariable("BLOB_STORAGE_CONNECTION_STRING");
             var containerName = Environment.GetEnvironmentVariable("CONTAINER_NAME");
-            var subscriptionId = Environment.GetEnvironmentVariable("SUBSCRIPTION_ID");    
+            var cdcContainerName = Environment.GetEnvironmentVariable("CDC_CONTAINER_NAME");
+            var subscriptionId = Environment.GetEnvironmentVariable("SUBSCRIPTION_ID");
 
 
             if (string.IsNullOrEmpty(connectionString) || string.IsNullOrEmpty(searchServiceName) || string.IsNullOrEmpty(apiKey) ||
                 string.IsNullOrEmpty(dataFactoryName) || string.IsNullOrEmpty(resourceGroupName) || string.IsNullOrEmpty(blobStorageConnectionString) ||
-                string.IsNullOrEmpty(containerName) || string.IsNullOrEmpty(subscriptionId)|| string.IsNullOrEmpty(searchIndexName)||
+                string.IsNullOrEmpty(cdcContainerName) || string.IsNullOrEmpty(containerName) || string.IsNullOrEmpty(subscriptionId) || string.IsNullOrEmpty(searchIndexName) ||
                 string.IsNullOrEmpty(clientId) || string.IsNullOrEmpty(tenantId) || string.IsNullOrEmpty(clientSecret) || string.IsNullOrEmpty(pipelineName))
             {
                 Console.WriteLine("One or more environment variables are missing. Please check your .env file.");
                 return;
             }
 
-            var etlPipeline = new ETLPipeline(subscriptionId, clientId, tenantId, clientSecret, dataFactoryName, resourceGroupName, blobStorageConnectionString, containerName,pipelineName);
+            var etlPipeline = new ETLPipeline(subscriptionId, clientId, tenantId, clientSecret, dataFactoryName, resourceGroupName, blobStorageConnectionString, containerName, pipelineName);
             var cognitiveSearchService = new CognitiveSearchService(searchServiceName, apiKey, searchIndexName);
-
-            while (true)
+            var changeDataCaptureService = new ChangeDataCaptureService(connectionString, blobStorageConnectionString, cdcContainerName);
 
             while (true)
             {
@@ -99,9 +99,17 @@ namespace ecommerceApp
                         }
                         break;
                     case "3":
-                        Console.WriteLine("Capturing changes...");
-                        // Call the CaptureChanges method here
-                        Console.WriteLine("Changes captured.");
+                        try
+                        {
+                            Console.WriteLine("Capturing changes...");
+                            await changeDataCaptureService.CaptureChangesAsync();
+                            Console.WriteLine("Changes captured successfylly...");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Something went wrong while capturing changes: {ex.Message}");
+                        }
+
                         break;
                     case "4":
                         Console.WriteLine("Exiting...");

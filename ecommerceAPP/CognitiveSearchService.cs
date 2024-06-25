@@ -25,7 +25,7 @@ namespace ecommerceApp
             {
                 var parameters = new SearchParameters
                 {
-                    Select = new[] { "*" }, 
+                    Select = new[] { "*" },
                     SearchMode = SearchMode.All,
                     QueryType = QueryType.Full
                 };
@@ -40,7 +40,7 @@ namespace ecommerceApp
                 }
 
                 var results = await _indexClient.Documents.SearchAsync(query, parameters);
-                var orders = results.Results.Select(result => 
+                var orders = results.Results.Select(result =>
                 {
                     var order = new Orders
                     {
@@ -53,7 +53,7 @@ namespace ecommerceApp
                         CategoryName = (string)result.Document["CategoryName"],
                         Quantity = (long)result.Document["Quantity"],
                         OrderStatus = (string)result.Document["OrderStatus"],
-                        Price = double.TryParse((string)result.Document["Price"], out double price)? price : 0,
+                        Price = double.TryParse((string)result.Document["Price"], out double price) ? price : 0,
                     };
                     return order;
                 });

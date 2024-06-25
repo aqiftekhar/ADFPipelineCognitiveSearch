@@ -75,7 +75,6 @@ namespace ecommerceApp
             var pipelineRun = await dataFactoryClient.Pipelines.CreateRunWithHttpMessagesAsync(
                 _resourceGroupName, _dataFactoryName, _pipelineName);
 
-            Console.WriteLine("pipelineRun.Response.StatusCode = " + pipelineRun.Response.StatusCode);
             if (pipelineRun.Response.StatusCode == HttpStatusCode.OK)
             {
                 Console.WriteLine($"ETL pipeline executed successfully. The Status code is : {pipelineRun.Response.StatusCode}");
