@@ -1,6 +1,3 @@
-Here is the code for your `README.md` with the correct formatting and structure:
-
-```markdown
 # Azure AI Search & Data Factories Integration
 
 ## Description
@@ -13,6 +10,7 @@ Following tasks are performed in this project:
 - Building and running the application using .NET 7.
 
 ## Project Configurations
+Following are the steps to configure and run the project.
 
 ### Clone the repository
 ```bash
