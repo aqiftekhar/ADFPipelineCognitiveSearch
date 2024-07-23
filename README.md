@@ -20,7 +20,7 @@ Following is the Azure Data Factory:
 - Execute Lookup Activity to Load the data from Excel file.
 - ForEach Activity with nested Stored Procedure to insert Products
 
-![ADF Pipeline](././images/adf_pipeline.png "ADF Pipeline")
+![ADF Pipeline](./ecommerceAPP/images/adf_pipeline.png "ADF Pipeline")
 
 ### Clone the repository
 ```bash
